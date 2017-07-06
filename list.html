@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="css/mui.css"/>
+</head>
+<body>
+	<!--git到服务器上面去试一下-->
+	<!--好像不行啊 真的吗-->
+    <!--下拉刷新容器-->
+    <div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+      <div class="mui-scroll">
+        <!--数据列表-->
+        <ul  id="list" class="mui-table-view mui-table-view-chevron">
+ 
+	        <!--<li class="mui-table-view-cell">
+	              <>要不要来个鸳鸯戏水呢</p>
+	              <img src="http://www.zbjuran.com/uploads/allimg/160530/2-160530145631924.gif" alt="" />
+	        </li>-->
+         
+             
+        </ul>
+      </div>
+    </div>
+    <script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	var page = 0;
+    	mui.init({
+    		pullRefresh : {
+			    container:refreshContainer,//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+			    up : {
+			      height:50,//可选.默认50.触发上拉加载拖动距离
+			      auto:true,//可选,默认false.自动上拉加载一次
+			      contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+			      contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+			      callback :function(){
+			      	page++;
+			      	var oUl = document.getElementById('list');
+			      	var that = this;
+			      	//请求数据
+			      	//动态图的url
+			      	var url1 = 'http://route.showapi.com/341-3?page='+ page +'&maxResult=10&showapi_appid=40652&showapi_sign=76e56daad4c345808bf88657df34726a';
+			      	//图片搞笑大全的url
+			      	var url2 = 'http://route.showapi.com/341-2?page='+ page +'&maxResult=10&showapi_appid=40652&showapi_sign=76e56daad4c345808bf88657df34726a';
+			      	//文本笑话大全
+			      	var url3 = 'http://route.showapi.com/341-1?page='+ page +'&maxResult=10&showapi_appid=40652&showapi_sign=76e56daad4c345808bf88657df34726a';
+			      	
+			      	mui.get(url2,function(res){
+			      		var data = res.showapi_res_body.contentlist;
+			      		for(var i = 0;i<data.length;i++){
+			      			oUl.innerHTML =  oUl.innerHTML + 
+'<li class="mui-table-view-cell"><p>'+ data[i].title +'</p><img src="'+ data[i].img +'" alt="" /></li>'
+			      		}
+			      		
+			      		
+			      	})
+			      	
+			      	//关闭刷新
+			      	that.endPullupToRefresh();
+			      }
+			    }
+			  }
+    	})
+    </script>
+</body>
+</html>
